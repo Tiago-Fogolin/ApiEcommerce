@@ -1,0 +1,1349 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API",
+        "version": "0.1"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api",
+            "description": "Servidor local"
+        }
+    ],
+    "paths": {
+        "/categorias": {
+            "get": {
+                "tags": [
+                    "Categorias"
+                ],
+                "summary": "Obtém todas as categorias",
+                "description": "Retorna uma lista com todas as categorias cadastradas",
+                "operationId": "getCategorias",
+                "responses": {
+                    "200": {
+                        "description": "Lista de categorias",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "nome": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Categorias"
+                ],
+                "summary": "Cria uma nova categoria",
+                "description": "Cria uma nova categoria com o nome fornecido",
+                "operationId": "createCategoria",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome"
+                                ],
+                                "properties": {
+                                    "nome": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Categoria criada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "nome": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro na validação dos dados fornecidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/clientes": {
+            "get": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Lista todos os clientes",
+                "description": "Retorna uma lista de todos os clientes cadastrados.",
+                "operationId": "getClientes",
+                "responses": {
+                    "200": {
+                        "description": "Lista de clientes retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Cliente"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro ao processar a solicitação"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Cria um novo cliente",
+                "description": "Cria um novo cliente com os dados fornecidos",
+                "operationId": "createCliente",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome",
+                                    "idade",
+                                    "email",
+                                    "cpf"
+                                ],
+                                "properties": {
+                                    "nome": {
+                                        "type": "string"
+                                    },
+                                    "idade": {
+                                        "type": "integer"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "cpf": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Cliente criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "nome": {
+                                            "type": "string"
+                                        },
+                                        "idade": {
+                                            "type": "integer"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "cpf": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro na validação dos dados fornecidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/pagamentos": {
+            "get": {
+                "tags": [
+                    "Pagamentos"
+                ],
+                "summary": "Obtém todos os pagamentos",
+                "description": "Retorna uma lista com todos os pagamentos cadastrados",
+                "operationId": "getPagamentos",
+                "responses": {
+                    "200": {
+                        "description": "Lista de pagamentos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "nome": {
+                                                "type": "string"
+                                            },
+                                            "id_pedido": {
+                                                "type": "integer"
+                                            },
+                                            "id_tipopagamento": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Pagamentos"
+                ],
+                "summary": "Cria um novo pagamento",
+                "description": "Cria um novo pagamento com os dados fornecidos",
+                "operationId": "createPagamento",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id_pedido",
+                                    "id_tipopagamento"
+                                ],
+                                "properties": {
+                                    "id_pedido": {
+                                        "type": "integer"
+                                    },
+                                    "id_tipopagamento": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Pagamento criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "id_pedido": {
+                                            "type": "integer"
+                                        },
+                                        "id_tipopagamento": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro na validação dos dados fornecidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/pedidos": {
+            "get": {
+                "tags": [
+                    "Pedidos"
+                ],
+                "summary": "Lista todos os pedidos",
+                "description": "Retorna uma lista de pedidos.",
+                "operationId": "getPedidos",
+                "responses": {
+                    "200": {
+                        "description": "Lista de pedidos retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Pedidos"
+                ],
+                "summary": "Cria um novo pedido",
+                "description": "Cria um pedido associado a um cliente.",
+                "operationId": "createPedido",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id_cliente": {
+                                        "description": "ID do cliente",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Pedido criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/pedidos/{pedido}": {
+            "get": {
+                "tags": [
+                    "Pedidos"
+                ],
+                "summary": "Obtém os detalhes de um pedido",
+                "description": "Retorna os detalhes de um pedido específico.",
+                "operationId": "getPedidoById",
+                "parameters": [
+                    {
+                        "name": "pedido",
+                        "in": "path",
+                        "description": "ID do pedido a ser consultado",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalhes do pedido retornados com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Pedido não encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Pedidos"
+                ],
+                "summary": "Deleta um pedido",
+                "description": "Deleta um pedido específica",
+                "operationId": "deletePedido",
+                "parameters": [
+                    {
+                        "name": "pedido",
+                        "in": "path",
+                        "description": "ID do pedido a ser deletado",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registro deletado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Pedido não encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/pedidos/{pedido}/produtos": {
+            "post": {
+                "tags": [
+                    "Pedidos"
+                ],
+                "summary": "Adiciona produtos a um pedido",
+                "description": "Adiciona uma lista de produtos ao pedido.",
+                "operationId": "addProdutosToPedido",
+                "parameters": [
+                    {
+                        "name": "pedido",
+                        "in": "path",
+                        "description": "ID do pedido",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "produtos": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "id_produto": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "quantidade": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Produtos adicionados ao pedido com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Pedidos"
+                ],
+                "summary": "Remove um produto do pedido",
+                "description": "Remove um produto específico de um pedido.",
+                "operationId": "deleteProdutoFromPedido",
+                "parameters": [
+                    {
+                        "name": "pedido",
+                        "in": "path",
+                        "description": "ID do pedido",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "id_produto": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Produto deletado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Produto não encontrado no pedido"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/pedidos/{pedidoId}/produtos": {
+            "get": {
+                "tags": [
+                    "Pedidos"
+                ],
+                "summary": "Lista os produtos de um pedido",
+                "description": "Retorna a lista de produtos associados a um pedido específico.",
+                "operationId": "getProdutosPorPedido",
+                "parameters": [
+                    {
+                        "name": "pedidoId",
+                        "in": "path",
+                        "description": "ID do pedido",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de produtos retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Produto"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Pedido não encontrado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/produtos": {
+            "get": {
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Exibe uma lista de produtos com filtros opcionais",
+                "description": "Retorna uma lista de produtos com base nos filtros fornecidos (nome, descrição, preço, estoque)",
+                "operationId": "getProdutos",
+                "parameters": [
+                    {
+                        "name": "nome",
+                        "in": "query",
+                        "description": "Filtra produtos pelo nome",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "descricao",
+                        "in": "query",
+                        "description": "Filtra produtos pela descrição",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "preco",
+                        "in": "query",
+                        "description": "Filtra produtos pelo preço exato",
+                        "required": false,
+                        "schema": {
+                            "type": "number",
+                            "format": "float"
+                        }
+                    },
+                    {
+                        "name": "menorPreco",
+                        "in": "query",
+                        "description": "Filtra produtos com preço maior ou igual a esse valor",
+                        "required": false,
+                        "schema": {
+                            "type": "number",
+                            "format": "float"
+                        }
+                    },
+                    {
+                        "name": "maiorPreco",
+                        "in": "query",
+                        "description": "Filtra produtos com preço menor ou igual a esse valor",
+                        "required": false,
+                        "schema": {
+                            "type": "number",
+                            "format": "float"
+                        }
+                    },
+                    {
+                        "name": "estoque",
+                        "in": "query",
+                        "description": "Filtra produtos pelo estoque",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de produtos filtrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "nome": {
+                                                "type": "string"
+                                            },
+                                            "descricao": {
+                                                "type": "string"
+                                            },
+                                            "preco": {
+                                                "type": "number",
+                                                "format": "float"
+                                            },
+                                            "estoque": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Cria um novo produto",
+                "description": "Cria um produto com os dados fornecidos.",
+                "operationId": "createProduto",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome",
+                                    "descricao",
+                                    "preco"
+                                ],
+                                "properties": {
+                                    "nome": {
+                                        "description": "Nome do produto",
+                                        "type": "string",
+                                        "example": "Produto X"
+                                    },
+                                    "descricao": {
+                                        "description": "Descrição do produto",
+                                        "type": "string",
+                                        "example": "Descrição do produto X"
+                                    },
+                                    "preco": {
+                                        "description": "Preço do produto",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": "19.99"
+                                    },
+                                    "estoque": {
+                                        "description": "Quantidade de estoque do produto",
+                                        "type": "integer",
+                                        "example": 100
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Produto criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "ID do produto",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "nome": {
+                                            "description": "Nome do produto",
+                                            "type": "string",
+                                            "example": "Produto X"
+                                        },
+                                        "descricao": {
+                                            "description": "Descrição do produto",
+                                            "type": "string",
+                                            "example": "Descrição do produto X"
+                                        },
+                                        "preco": {
+                                            "description": "Preço do produto",
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": "19.99"
+                                        },
+                                        "estoque": {
+                                            "description": "Quantidade de estoque do produto",
+                                            "type": "integer",
+                                            "example": 100
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro na validação dos dados enviados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Mensagem de erro",
+                                            "type": "string",
+                                            "example": "Validation failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/produtos/{produto}": {
+            "get": {
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Obtém os detalhes de um produto",
+                "description": "Retorna as informações do produto especificado pelo ID.",
+                "operationId": "getProdutoById",
+                "parameters": [
+                    {
+                        "name": "produto",
+                        "in": "path",
+                        "description": "ID do produto a ser consultado",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalhes do produto retornados com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "nome": {
+                                            "type": "string",
+                                            "example": "Produto A"
+                                        },
+                                        "descricao": {
+                                            "type": "string",
+                                            "example": "Descrição do Produto A"
+                                        },
+                                        "preco": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 99.99
+                                        },
+                                        "estoque": {
+                                            "type": "integer",
+                                            "example": 50
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Produto não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Produto não encontrado."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/produtos/{produto}/categorias": {
+            "get": {
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Obtém as categorias associadas a um produto",
+                "description": "Retorna uma lista de categorias vinculadas ao produto especificado pelo ID.",
+                "operationId": "getCategoriasProduto",
+                "parameters": [
+                    {
+                        "name": "produto",
+                        "in": "path",
+                        "description": "ID do produto cujas categorias serão listadas",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de categorias retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "nome": {
+                                                "type": "string",
+                                                "example": "Categoria 1"
+                                            },
+                                            "descricao": {
+                                                "type": "string",
+                                                "example": "Descrição da categoria"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Produto não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Produto não encontrado."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Adiciona categorias a um produto",
+                "description": "Adiciona uma ou mais categorias a um produto existente, vinculado pelo ID do produto.",
+                "operationId": "adicionarCategorias",
+                "parameters": [
+                    {
+                        "name": "produto",
+                        "in": "path",
+                        "description": "ID do produto ao qual as categorias serão adicionadas",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "categorias"
+                                ],
+                                "properties": {
+                                    "categorias": {
+                                        "description": "Array de categorias a serem adicionadas",
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "id_categoria"
+                                            ],
+                                            "properties": {
+                                                "id_categoria": {
+                                                    "description": "ID de uma categoria existente",
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Categorias adicionadas com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Categorias adicionadas ao produto com sucesso!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Produto não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Produto não encontrado."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro na validação dos dados enviados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation failed."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/tipopagamento": {
+            "get": {
+                "tags": [
+                    "TipoPagamento"
+                ],
+                "summary": "Obtém todos os tipos de pagamento",
+                "description": "Retorna uma lista com todos os tipos de pagamento cadastradas",
+                "operationId": "getTipoPagamento",
+                "responses": {
+                    "200": {
+                        "description": "Lista de tipos de pagamento",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "nome": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "TipoPagamento"
+                ],
+                "summary": "Cria um novo tipo de pagamento",
+                "description": "Cria um novo tipo de pagamento com o nome fornecido",
+                "operationId": "createTipoPagamento",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome"
+                                ],
+                                "properties": {
+                                    "nome": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tipo de Pagamento criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "nome": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro na validação dos dados fornecidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Cliente": {
+                "title": "Cliente",
+                "description": "Modelo de Cliente",
+                "required": [
+                    "nome",
+                    "email",
+                    "cpf"
+                ],
+                "properties": {
+                    "nome": {
+                        "description": "Nome do cliente",
+                        "type": "string"
+                    },
+                    "idade": {
+                        "description": "Idade do cliente",
+                        "type": "integer"
+                    },
+                    "email": {
+                        "description": "Email do cliente",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "cpf": {
+                        "description": "CPF do cliente (apenas números)",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Produto": {
+                "title": "Produto",
+                "description": "Representação de um produto",
+                "properties": {
+                    "id": {
+                        "description": "ID do produto",
+                        "type": "integer"
+                    },
+                    "nome": {
+                        "description": "Nome do produto",
+                        "type": "string"
+                    },
+                    "descricao": {
+                        "description": "Descrição do produto",
+                        "type": "string"
+                    },
+                    "preco": {
+                        "description": "Preço do produto",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "estoque": {
+                        "description": "Quantidade em estoque do produto",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Insira o token",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Categorias",
+            "description": "Categorias"
+        },
+        {
+            "name": "Clientes",
+            "description": "Clientes"
+        },
+        {
+            "name": "Pagamentos",
+            "description": "Pagamentos"
+        },
+        {
+            "name": "Pedidos",
+            "description": "Pedidos"
+        },
+        {
+            "name": "Produtos",
+            "description": "Produtos"
+        },
+        {
+            "name": "TipoPagamento",
+            "description": "TipoPagamento"
+        }
+    ]
+}
