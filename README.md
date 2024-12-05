@@ -4,7 +4,7 @@
 - Foi criado um Banco de Dados para o cenário de e-commerce com as tabelas:
 Clientes, Produtos, Categorias, Pedidos, Produto_Pedido, Produto_Categoria, Tipos_Pagamento e Pagamentos:
 
-![Imagem do Banco](bd.png)
+![Imagem do Banco](https://github.com/Tiago-Fogolin/ApiEcommerce/blob/master/db.png)
 
 - Essa modelagem está disponível para melhor visualização no site: https://app.brmodeloweb.com/#!/publicview/6751703eec7ab57db648c01b
 
@@ -101,8 +101,8 @@ GROUP BY clientes.id
 ```sql
 WITH pedidos_filtrados AS (
     SELECT id,
-		   id_cliente,
-		   created_at 
+	       id_cliente,
+	       created_at 
     FROM pedidos
     WHERE YEAR(created_at) = YEAR(CURDATE()) - 1
 )
